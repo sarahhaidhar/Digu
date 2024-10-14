@@ -25,7 +25,7 @@ public class Player{
 	public void getValues(ArrayList<Card> h){
 		ArrayList<Card> hand = h;
 		for (Card card : hand){
-			System.out.println(card);
+			String value = card.getValue();
 		}
 
 

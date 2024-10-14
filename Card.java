@@ -13,15 +13,15 @@ public Card(String st, String v, int s){
 	score = s;
 }
 
-public String get_suit(){
+public String getSuit(){
 	return suit;
 }
 
-public String get_value(){
+public String getValue(){
 	return value;
 }
 
-public int get_score(){
+public int getScore(){
 	return score;
 }
 

@@ -1,3 +1,5 @@
+import java.io.*;
+import java.lang.*;
 import java.util.*;
 
 public class Digu{
@@ -22,7 +24,7 @@ public class Digu{
 
         // instantiates new player objects and add to players arraylist
         // player objects are instantiated with a hand, those cards are also then removed from the main deck
-		for (int i=0; i < Integer.parseInt(noOfPlayers); i++){
+		for (int i=1; i < Integer.parseInt(noOfPlayers); i++){
 			Player player = new Player(i, deck.removeCard(10));
 			players.add(player);
 			System.out.println("Player" + (i+1) + ":" + player.getHand());
@@ -34,15 +36,60 @@ public class Digu{
 		System.out.println("discard: " + discard);
 		System.out.println("Current Deck: " + deck.getDeck());
 
-		this.winCondition(players.get(0));
+		// Card testOne = new Card("a", "1", 1);
+		// Card testTwo = new Card("a", "2", 2);
+		// Card testThree = new Card("a", "3", 3);
+
+		// ArrayList<Card> testHand = new ArrayList<Card>();
+		// testHand.add(testOne);
+		// testHand.add(testOne);
+		// testHand.add(testOne);
+		// testHand.add(testOne);
+		// testHand.add(testTwo);
+		// testHand.add(testTwo);
+		// testHand.add(testTwo);
+		// testHand.add(testThree);
+		// testHand.add(testThree);
+		// testHand.add(testThree);
+
+		// Player testPlayer = new Player(5, testHand);
+
+		// System.out.println(this.winCondition(testPlayer));
 
 
 	}
 
-	public void winCondition(Player p){
+	public boolean winCondition(Player p){
 		Player player = p;
 		ArrayList<Card> currentHand = player.getHand();
-		player.getValues(currentHand);
+		Collections.sort(currentHand, new Sortbyvalue());
+		System.out.println(currentHand);
+		String possibleOne = "334";
+		String possibleTwo = "343";
+		String possibleThree = "433";
+		String stringListOfValues = "";
+
+		Map<String, Integer> cardAmount = new HashMap<String, Integer>();
+
+		for (Card card: currentHand){
+			Integer j = cardAmount.get(card.getValue());
+			cardAmount.put(card.getValue(), (j == null) ? 1: j + 1);
+		}
+
+		ArrayList<Integer> listOfValues = new ArrayList<>(cardAmount.values());
+		for (Integer value : listOfValues){
+			stringListOfValues += Integer.toString(value);
+
+		}
+
+		System.out.println(stringListOfValues);
+
+		if (stringListOfValues.equals(possibleOne) || stringListOfValues.equals(possibleTwo) || stringListOfValues.equals(possibleThree)){
+			return true;
+		}
+		else{
+			return false;
+		}
 
 	}
 }
