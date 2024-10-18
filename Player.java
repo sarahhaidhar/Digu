@@ -27,7 +27,13 @@ public class Player{
 		for (Card card : hand){
 			String value = card.getValue();
 		}
+	}
 
+	public void takeCard (Card card){
+		this.hand.add(card);
+	}
+
+	public void removeCard(Card card){
 
 	}
 }

@@ -24,17 +24,20 @@ public class Digu{
 
         // instantiates new player objects and add to players arraylist
         // player objects are instantiated with a hand, those cards are also then removed from the main deck
-		for (int i=1; i < Integer.parseInt(noOfPlayers); i++){
+		for (int i=0; i < Integer.parseInt(noOfPlayers); i++){
 			Player player = new Player(i, deck.removeCard(10));
 			players.add(player);
-			System.out.println("Player" + (i+1) + ":" + player.getHand());
-
 		}
+		getAllHands();
 		System.out.println("Current Deck: " + deck.getDeck());
 		this.discard = new Stack<Card>();
 		discard.push((deck.removeCard(1)).get(0));
 		System.out.println("discard: " + discard);
-		System.out.println("Current Deck: " + deck.getDeck());
+		System.out.println("Current Deck: " + deck.getDeck().size());
+		this.takeTurn();
+		// players.get(0).setHand(deck.getDeck());
+		// System.out.println("PLayer one deck:" + players.get(0).getHand());
+		// System.out.println("maindeck:" + deck.getDeck());
 
 		// Card testOne = new Card("a", "1", 1);
 		// Card testTwo = new Card("a", "2", 2);
@@ -64,9 +67,6 @@ public class Digu{
 		ArrayList<Card> currentHand = player.getHand();
 		Collections.sort(currentHand, new Sortbyvalue());
 		System.out.println(currentHand);
-		String possibleOne = "334";
-		String possibleTwo = "343";
-		String possibleThree = "433";
 		String stringListOfValues = "";
 
 		Map<String, Integer> cardAmount = new HashMap<String, Integer>();
@@ -84,12 +84,38 @@ public class Digu{
 
 		System.out.println(stringListOfValues);
 
-		if (stringListOfValues.equals(possibleOne) || stringListOfValues.equals(possibleTwo) || stringListOfValues.equals(possibleThree)){
+		if (stringListOfValues.equals("433") || stringListOfValues.equals("334") || stringListOfValues.equals("343")){
 			return true;
 		}
 		else{
 			return false;
 		}
 
+	}
+
+	public void getAllHands(){
+		for (Player player: players){
+			System.out.println("Player" + player.playerNumber + ": " + player.getHand());
+
+		}
+	}
+
+	//implement the actual turn taking plz
+
+	public void takeTurn(){
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("START");
+		for (Player player: players){
+			System.out.println("Want this? " + discard.peek());	
+			String discardTakeAnswer = scanner.nextLine();
+			if (discardTakeAnswer.equals("y")){
+				player.takeCard(discard.pop());
+				System.out.println("index card to remove");
+				int indexCard = Integer.valueOf(scanner.nextLine());
+				discard.push(player.getHand().get(indexCard));
+
+			}
+		}
+		getAllHands();
 	}
 }
